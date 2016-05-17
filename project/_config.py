@@ -1,10 +1,10 @@
 import os
 
-# grab the foler where this script lives
+# grab the folder where this script lives
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-# the WTF config seeting is used for cross-sute request forgery prevention
-# The SECRET_KEY is used with WTF to create a cryptographic token that is used to cvalidate a form
+# the WTF config setting is used for cross-suite request forgery prevention
+# The SECRET_KEY is used with WTF to create a cryptographic token that is used to validate a form
 
 DATABASE = 'flasktaskr.db'
 USERNAME = 'admin'
