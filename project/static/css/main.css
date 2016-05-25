@@ -25,7 +25,7 @@ h2              { font-size: 1.2em; }
                   border: 1px solid #aacbe2; }
 
 /* Error Message Formatting */
-.error          { background: #f0d6d6; padding: 0.5em; }
+.error          { color: red; font-size: .8em; background-color: #FFFFFF; }
 
 /* Tasks Formatting */
 .add-task 		{ font-size: 0.9em; border-bottom: 1px solid #ccc; }
