@@ -5,7 +5,7 @@ from views import db
 
 import datetime
 
-# We have one class, Task(), that defines the tasks table
+
 class Task(db.Model):
 
 	__tablename__ = "tasks"
