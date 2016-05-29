@@ -1,5 +1,5 @@
 /* Primary Tag Formatting */
-body            { font-family: sans-serif; background: #eee; }
+body            { padding: 60px 0; font-family: sans-serif; background: #ffffff; }
 a, h1, h2       { color: #377ba8; }
 h1, h2          { font-family: 'Georgia', serif; margin: 0; }
 h1              { border-bottom: 2px solid #eee; }
@@ -25,7 +25,7 @@ h2              { font-size: 1.2em; }
                   border: 1px solid #aacbe2; }
 
 /* Error Message Formatting */
-.error          { color: red; font-size: .8em; background-color: #FFFFFF; }
+.error          { color: red; font-size: .8em;}
 
 /* Tasks Formatting */
 .add-task 		{ font-size: 0.9em; border-bottom: 1px solid #ccc; }
@@ -44,3 +44,8 @@ h2              { font-size: 1.2em; }
 
 /* Button Formatting */
 .button 		{ background-color:# 000; display:inline-block; color:# ffffff; font-size: 13px; padding: 3px 12px; margin: 0; text-decoration:none; position:relative; }
+
+/* Footer Formatting */
+.footer {
+	padding-top: 30px;
+}

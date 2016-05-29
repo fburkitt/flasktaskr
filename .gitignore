@@ -12,5 +12,6 @@ env
 venv 
 __pycache__ 
 
-
+.coverage
+htmlcov
 
