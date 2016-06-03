@@ -34,11 +34,13 @@ def login_required(test):
 
 
 def open_tasks():
-    return db.session.query(Task).filter_by(status='1').order_by(Task.due_date.asc())
+    return db.session.query(Task).filter_by(
+        status='1').order_by(Task.due_date.asc())
 
 
 def closed_tasks():
-    return db.session.query(Task).filter_by(status='0').order_by(Task.due_date.asc())
+    return db.session.query(Task).filter_by(
+        status='0').order_by(Task.due_date.asc())
 
 
 ################
@@ -52,8 +54,7 @@ def tasks():
         'tasks.html',
         form=AddTaskForm(request.form),
         open_tasks=open_tasks(),
-        closed_tasks=closed_tasks(), 
-        username = session['name']
+        closed_tasks=closed_tasks()
     )
 
 

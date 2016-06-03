@@ -22,12 +22,10 @@ class TasksTests(unittest.TestCase):
     def setUp(self):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
-        app.config['DEBUG'] = False
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
             os.path.join(basedir, TEST_DB)
         self.app = app.test_client()
         db.create_all()
-        self.assertEquals(app.debug, False)
 
     # executed after each test
     def tearDown(self):
@@ -54,10 +52,7 @@ class TasksTests(unittest.TestCase):
         return self.app.get('logout/', follow_redirects=True)
 
     def create_user(self, name, email, password):
-        new_user = User(
-            name=name, 
-            email=email, 
-            password=bcrypt.generate_password_hash(password))
+        new_user = User(name=name, email=email, password=password)
         db.session.add(new_user)
         db.session.commit()
 
@@ -74,7 +69,7 @@ class TasksTests(unittest.TestCase):
         new_user = User(
             name='Superman',
             email='admin@realpython.com',
-            password=bcrypt.generate_password_hash('allpowerful'),
+            password='allpowerful',
             role='admin'
         )
         db.session.add(new_user)
@@ -197,60 +192,24 @@ class TasksTests(unittest.TestCase):
         )
 
     def test_string_reprsentation_of_the_task_object(self):
+
         from datetime import date
-        db.session.add(Task("Run around in circles", date(2015, 1, 22), 10, date(2015, 1, 23), 1, 1))
+        db.session.add(
+            Task(
+                "Run around in circles",
+                date(2015, 1, 22),
+                10,
+                date(2015, 1, 23),
+                1,
+                1
+            )
+        )
+
         db.session.commit()
+
         tasks = db.session.query(Task).all()
         for task in tasks:
             self.assertEqual(task.name, 'Run around in circles')
-
-    def test_task_template_displays_logged_in_user_name():
-        self.register('Fletcher', 'fletcher@realpython.com', 'python101', 'python101')
-        self.login('Fletcher', 'python101')
-        response = self.app.get('tasks/', follow_redirects=True)
-        self.assertIn(b'Fletcher', response.data)
-
-    def test_users_cannot_see_task_modify_links_for_tasks_not_created_by_them(self):
-        self.register('Michael', 'michael@realpython.com', 'python', 'python')
-        self.login('Michael', 'python')
-        self.app.get('tasks/', follow_redirects=True)
-        self.create_task()
-        self.logout()
-        self.register('Fletcher', 'fletcher@realpython.com', 'python101', 'python101')
-        response = self.login('Fletcher', 'python101')
-        self.app.get('tasks/', follow_redirects=True)
-        self.assertNotIn(b'Mark as complete', response.data)
-        self.assertNotIn(b'Delete', response.data)
-
-    def test_users_can_see_task_modify_links_for_tasks_created_by_them(self):
-        self.register('Michael', 'michael@realpython.com', 'python', 'python')
-        self.login('Michael', 'python')
-        self.app.get('tasks/', follow_redirects=True)
-        self.create_task()
-        self.logout()
-        self.register('Fletcher', 'fletcher@realpython.com', 'python101', 'python101')
-        self.login('Fletcher', 'python101')
-        self.app.get('tasks/', follow_redirects=True)
-        response = self.create_task()
-        self.assertIn(b'complete/2/', response.data)
-        self.assertIn(b'complete/2/', response.data)
-
-    def test_admin_users_can_see_task_modify_links_for_all_tasks():
-        self.register('Michael', 'michael@realpython.com', 'python', 'python')
-        self.login('Michael', 'python')
-        self.app.get('tasks/', follow_redirects=True)
-        self.create_task()
-        self.logout()
-        self.register('Fletcher', 'fletcher@realpython.com', 'python101', 'python101')
-        self.login('Fletcher', 'python101')
-        self.app.get('tasks/', follow_redirects=True)
-        response = self.create_task()
-        self.assertIn(b'complete/1/', response.data)
-        self.assertIn(b'delete/1/', response.data)
-        self.assertIn(b'complete/2/', response.data)
-        self.assertIn(b'delete/2/', response.data)
-
-
 
 
 if __name__ == "__main__":
